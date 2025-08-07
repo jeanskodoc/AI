@@ -1,0 +1,160 @@
+<script>
+// Base de données centrale simulée
+const schoolDatabase = {
+  // Initialiser depuis localStorage ou avec des valeurs par défaut
+  init: function() {
+    const savedData = localStorage.getItem('schoolDatabase');
+    if (savedData) {
+      Object.assign(this, JSON.parse(savedData));
+    } else {
+      // Données par défaut
+      this.parentAccounts = [
+        {
+          id: 1,
+          name: "Paul DUPONT",
+          email: "paul.dupont@example.com",
+          phone: "+22890123456",
+          password: "parent123",
+          studentName: "Jean DUPONT",
+          studentClass: "3eme"
+        },
+        {
+          id: 2,
+          name: "Awa KOUASSI",
+          email: "awa.kouassi@example.com",
+          phone: "+22890234567",
+          password: "parent456",
+          studentName: "Marie KOUASSI",
+          studentClass: "premiere-c"
+        }
+      ];
+
+      this.teachers = [
+        {
+          id: 1,
+          name: "KOFFI Jean",
+          subject: "mathematiques",
+          class: "6eme",
+          username: "math_6eme",
+          password: "math123"
+        },
+        {
+          id: 2,
+          name: "ADJOBI Awa",
+          subject: "francais",
+          class: "4eme",
+          username: "francais_4eme",
+          password: "francais456"
+        }
+      ];
+
+      this.students = [
+        {
+          id: 1,
+          name: "Jean DUPONT",
+          class: "3ème",
+          evaluations: [
+            {
+              id: 1,
+              title: "Contrôle sur les fractions",
+              subject: "Mathématiques",
+              teacher: "M. Martin",
+              date: "2024-11-15",
+              type: "Contrôle écrit",
+              grade: 16,
+              maxGrade: 20,
+              appreciation: "tres-bien",
+              comments: "Excellente maîtrise des concepts. Continuez ainsi !"
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: "Marie KOUASSI",
+          class: "Première C",
+          evaluations: [
+            {
+              id: 4,
+              title: "Les fonctions dérivées",
+              subject: "Mathématiques",
+              teacher: "M. Agbeko",
+              date: "2024-11-14",
+              type: "Contrôle écrit",
+              grade: 15,
+              maxGrade: 20,
+              appreciation: "bien",
+              comments: "Bonne compréhension générale, quelques erreurs de calcul."
+            }
+          ]
+        }
+      ];
+
+      this.save();
+    }
+  },
+
+  // Sauvegarder dans localStorage
+  save: function() {
+    localStorage.setItem('schoolDatabase', JSON.stringify({
+      parentAccounts: this.parentAccounts,
+      teachers: this.teachers,
+      students: this.students
+    }));
+  },
+
+  // Méthodes d'accès aux données
+  getStudentByName: function(name) {
+    return this.students.find(s => s.name.toLowerCase() === name.toLowerCase());
+  },
+
+  getParentAccount: function(username, password) {
+    return this.parentAccounts.find(account => 
+      (account.email === username || account.phone === username) && 
+      account.password === password
+    );
+  },
+
+  getTeacherAccount: function(username, password) {
+    return this.teachers.find(teacher => 
+      teacher.username === username && 
+      teacher.password === password
+    );
+  },
+
+  addEvaluation: function(studentName, evaluation) {
+    const student = this.getStudentByName(studentName);
+    if (student) {
+      evaluation.id = Date.now(); // ID unique
+      student.evaluations.push(evaluation);
+      this.save();
+      return true;
+    }
+    return false;
+  },
+
+  addParentAccount: function(accountData) {
+    const newAccount = {
+      id: this.parentAccounts.length + 1,
+      ...accountData
+    };
+    this.parentAccounts.push(newAccount);
+    this.save();
+    return newAccount;
+  },
+
+  addTeacher: function(teacherData) {
+    const newTeacher = {
+      id: this.teachers.length + 1,
+      ...teacherData
+    };
+    this.teachers.push(newTeacher);
+    this.save();
+    return newTeacher;
+  }
+};
+
+// Initialiser la base de données au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  schoolDatabase.init();
+});
+</script>

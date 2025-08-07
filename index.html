@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lycée Niamtougou - Portail Scolaire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fff, #f0f8ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .school-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .school-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        .welcome-message h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-message p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .portal-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .portal-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .portal-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .portal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .portal-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .portal-card p {
+            font-size: 1rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-parents {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-teachers {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .portal-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-message h1 {
+                font-size: 2rem;
+            }
+            
+            .welcome-message p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="school-logo">
+            <div class="school-logo-text">LN</div>
+        </div>
+        <h1 class="school-name">Lycée Niamtougou</h1>
+        <p class="school-subtitle">République Togolaise</p>
+    </header>
+
+    <main class="main-content">
+        <div class="welcome-message">
+            <h1>Bienvenue sur le Portail Scolaire</h1>
+            <p>
+                Le Lycée Niamtougou met à votre disposition cette plateforme numérique pour faciliter 
+                le suivi scolaire, la communication entre les différents acteurs et la gestion des 
+                évaluations. Veuillez sélectionner votre espace de connexion ci-dessous.
+            </p>
+        </div>
+
+        <div class="portal-cards">
+            <div class="portal-card">
+                <div class="portal-icon">👨‍👩‍👧‍👦</div>
+                <h2>Espace Parents</h2>
+                <p>
+                    Accédez aux notes, évaluations et informations scolaires de votre enfant.
+                    Consultez les appréciations des enseignants et le suivi pédagogique.
+                </p>
+                <a href="PAGE PARENTS+ID.htm" class="btn btn-parents">Accéder</a>
+            </div>
+
+            <div class="portal-card">
+                <div class="portal-icon">👨‍🏫</div>
+                <h2>Espace Enseignants</h2>
+                <p>
+                    Saisissez les notes et évaluations, rédigez des appréciations et 
+                    consultez les statistiques de vos classes.
+                </p>
+                <a href="PAGE ENS+ID.htm" class="btn btn-teachers">Accéder</a>
+            </div>
+
+            <div class="portal-card">
+                <div class="portal-icon">👨‍💼</div>
+                <h2>Espace Administration</h2>
+                <p>
+                    Tableau de bord complet avec statistiques, gestion des compétences 
+                    et identification des élèves en difficulté.
+                </p>
+                <a href="PAGE ADMINISTRATION-1.htm" class="btn btn-admin">Accéder</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Lycée Niamtougou - Tous droits réservés</p>
+        <p>Plateforme développée par l'équipe pédagogique</p>
+    </footer>
+</body>
+</html>
