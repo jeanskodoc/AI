@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=3.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
+    <title>Espace Parents - Lycée Niamtougou</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1.5" fill="white" opacity="0.1"/><circle cx="60" cy="80" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="60" r="1.2" fill="white" opacity="0.1"/></svg>');
+        }
+
+        .school-info {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+        }
+
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fff, #f0f8ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(79, 172, 254, 0.1), transparent);
+            animation: rotate 8s linear infinite;
+        }
+
+        .school-logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4facfe;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .school-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .school-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .auth-section {
+            display: block;
+        }
+
+        .auth-section.hidden {
+            display: none;
+        }
+
+        .login-form {
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 233, 123, 0.3);
+        }
+
+        .error-message {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background: #43e97b;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .search-section {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #4facfe;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .student-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .student-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .evaluations-section {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 2px;
+        }
+
+        .evaluation-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #4facfe;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .evaluation-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .evaluation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .evaluation-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .evaluation-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .grade-display {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .grade-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4facfe;
+            line-height: 1;
+        }
+
+        .grade-max {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .evaluation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .evaluation-info {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .appreciation {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .appreciation-label {
+            font-size: 0.9rem;
+            color: #8b4513;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .appreciation-value {
+            color: #8b4513;
+            font-weight: 500;
+        }
+
+        .comments {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .comments-label {
+            font-size: 0.9rem;
+            color: #2c5aa0;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .comments-text {
+            color: #2c5aa0;
+            line-height: 1.5;
+        }
+
+        .statistics {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .stats-title {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            display: none;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .register-form {
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        /* Classes pour les notes */
+        .grade-excellent { color: #28a745; }
+        .grade-good { color: #17a2b8; }
+        .grade-average { color: #ffc107; }
+        .grade-poor { color: #dc3545; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                margin: 0;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .evaluation-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .grade-display {
+                min-width: auto;
+                margin-top: 15px;
+            }
+
+            .evaluation-details {
+                grid-template-columns: 1fr;
+            }
+
+            .student-details {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .school-name {
+                font-size: 1.4rem;
+            }
+
+            .evaluation-card {
+                padding: 20px 15px;
+            }
+
+            .grade-value {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="school-info">
+                <div class="school-logo">
+                    <div class="school-logo-text">LN</div>
+                </div>
+                <div class="school-name">Lycée Niamtougou</div>
+                <div class="school-subtitle">République Togolaise</div>
+            </div>
+            <h1 id="main-title">👥 Espace Parents</h1>
+            <p id="main-subtitle">Consultation des notes et évaluations</p>
+        </div>
+
+        <!-- Section de connexion -->
+        <div id="login-section" class="auth-section">
+            <div class="login-form">
+                <div id="error-message" class="error-message" style="display: none;"></div>
+                <div id="success-message" class="success-message" style="display: none;"></div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">👤 Email ou Identifiant :</label>
+                        <input type="text" id="username" name="username" required placeholder="Votre email ou identifiant">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">🔑 Mot de passe :</label>
+                        <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        🚪 Se connecter
+                    </button>
+                </form>
+                
+                <button type="button" class="register-btn" onclick="showRegisterForm()">
+                    📝 Créer un compte
+                </button>
+            </div>
+        </div>
+
+        <!-- Section d'inscription -->
+        <div id="register-section" class="auth-section hidden">
+            <div class="register-form">
+                <div id="register-error" class="error-message" style="display: none;"></div>
+                <div id="register-success" class="success-message" style="display: none;"></div>
+                
+                <h2>📝 Créer un compte parent</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="parent-name">👤 Nom complet :</label>
+                        <input type="text" id="parent-name" name="parent-name" required placeholder="Votre nom complet">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="parent-email">📧 Email :</label>
+                        <input type="email" id="parent-email" name="parent-email" required placeholder="Votre adresse email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="parent-phone">📞 Téléphone :</label>
+                        <input type="tel" id="parent-phone" name="parent-phone" required placeholder="Votre numéro de téléphone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">🔑 Mot de passe :</label>
+                        <input type="password" id="register-password" name="register-password" required placeholder="Créez un mot de passe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">🔏 Confirmer le mot de passe :</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirmez votre mot de passe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="student-name">👦 Nom de l'élève :</label>
+                        <input type="text" id="student-name" name="student-name" required placeholder="Nom complet de votre enfant">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="student-class">🏫 Classe de l'élève :</label>
+                        <select id="student-class" name="student-class" required>
+                            <option value="">Sélectionner une classe</option>
+                            <option value="6eme">6ème</option>
+                            <option value="5eme">5ème</option>
+                            <option value="4eme">4ème</option>
+                            <option value="3eme">3ème</option>
+                            <option value="seconde-a">Seconde A</option>
+                            <option value="seconde-c">Seconde C</option>
+                            <option value="premiere-a1">Première A1</option>
+                            <option value="premiere-a2">Première A2</option>
+                            <option value="premiere-c">Première C</option>
+                            <option value="premiere-d">Première D</option>
+                            <option value="terminale-a1">Terminale A1</option>
+                            <option value="terminale-a2">Terminale A2</option>
+                            <option value="terminale-c">Terminale C</option>
+                            <option value="terminale-d">Terminale D</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        ✅ S'inscrire
+                    </button>
+                </form>
+                
+                <button type="button" class="back-btn" onclick="showLoginSection()">
+                    ← Retour à la connexion
+                </button>
+            </div>
+        </div>
+
+        <!-- Section principale après connexion -->
+        <div id="main-content" class="auth-section hidden">
+            <button class="logout-btn" onclick="logout()">🚪 Déconnexion</button>
+            
+            <div class="content">
+                <!-- Informations de l'élève -->
+                <div id="student-info" class="student-info">
+                    <h2 id="student-name-display">Nom de l'élève</h2>
+                    <div class="student-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Classe</div>
+                            <div class="detail-value" id="student-class-display">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Nombre d'évaluations</div>
+                            <div class="detail-value" id="total-evaluations">0</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Moyenne générale</div>
+                            <div class="detail-value" id="general-average">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Dernière évaluation</div>
+                            <div class="detail-value" id="last-evaluation">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section des évaluations -->
+                <div id="evaluations-section" class="evaluations-section">
+                    <h2 class="section-title">📊 Évaluations et Notes</h2>
+                    <div id="evaluations-list">
+                        <!-- Les évaluations seront affichées ici -->
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div id="statistics" class="statistics" style="display: none;">
+                    <h3 class="stats-title">📈 Statistiques détaillées</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-total">0</div>
+                            <div class="stat-label">Évaluations</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-average">-</div>
+                            <div class="stat-label">Moyenne</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-best">-</div>
+                            <div class="stat-label">Meilleure note</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="stat-subjects">0</div>
+                            <div class="stat-label">Matières</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message quand aucun résultat -->
+                <div id="no-results" class="no-results">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>Aucune évaluation trouvée</h3>
+                    <p>Aucune note n'a été trouvée pour cet élève. Contactez l'établissement pour plus d'informations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données des élèves et évaluations
+        const studentData = {
+            "jean dupont": {
+                name: "Jean DUPONT",
+                class: "3ème",
+                evaluations: [
+                    {
+                        id: 1,
+                        title: "Contrôle sur les fractions",
+                        subject: "Mathématiques",
+                        teacher: "M. Martin",
+                        date: "2024-11-15",
+                        type: "Contrôle écrit",
+                        grade: 16,
+                        maxGrade: 20,
+                        appreciation: "tres-bien",
+                        comments: "Excellente maîtrise des concepts. Continuez ainsi !"
+                    },
+                    {
+                        id: 2,
+                        title: "Dictée et questions de compréhension",
+                        subject: "Français",
+                        teacher: "Mme Dubois",
+                        date: "2024-11-12",
+                        type: "Contrôle écrit",
+                        grade: 14,
+                        maxGrade: 20,
+                        appreciation: "bien",
+                        comments: "Bon travail, attention à l'orthographe."
+                    },
+                    {
+                        id: 3,
+                        title: "La Révolution française",
+                        subject: "Histoire-Géographie",
+                        teacher: "M. Bernard",
+                        date: "2024-11-10",
+                        type: "Interrogation orale",
+                        grade: 18,
+                        maxGrade: 20,
+                        appreciation: "excellent",
+                        comments: "Très bonne présentation et connaissance du sujet."
+                    }
+                ]
+            },
+            "marie kouassi": {
+                name: "Marie KOUASSI",
+                class: "Première C",
+                evaluations: [
+                    {
+                        id: 4,
+                        title: "Les fonctions dérivées",
+                        subject: "Mathématiques",
+                        teacher: "M. Agbeko",
+                        date: "2024-11-14",
+                        type: "Contrôle écrit",
+                        grade: 15,
+                        maxGrade: 20,
+                        appreciation: "bien",
+                        comments: "Bonne compréhension générale, quelques erreurs de calcul."
+                    },
+                    {
+                        id: 5,
+                        title: "Cinétique chimique",
+                        subject: "Physique-Chimie",
+                        teacher: "Mme Togo",
+                        date: "2024-11-08",
+                        type: "Travaux pratiques",
+                        grade: 17,
+                        maxGrade: 20,
+                        appreciation: "tres-bien",
+                        comments: "Excellente manipulation et analyse des résultats."
+                    }
+                ]
+            },
+            "koffi mensah": {
+                name: "Koffi MENSAH",
+                class: "Terminale D",
+                evaluations: [
+                    {
+                        id: 6,
+                        title: "Génétique mendélienne",
+                        subject: "Sciences de la Vie et de la Terre (SVT)",
+                        teacher: "Dr. Amouzou",
+                        date: "2024-11-13",
+                        type: "Contrôle écrit",
+                        grade: 19,
+                        maxGrade: 20,
+                        appreciation: "excellent",
+                        comments: "Parfaite maîtrise des lois de Mendel et de leur application."
+                    }
+                ]
+            }
+        };
+
+        // Base de données des comptes parents (simulée)
+        let parentAccounts = [
+            {
+                id: 1,
+                name: "Paul DUPONT",
+                email: "paul.dupont@example.com",
+                phone: "+22890123456",
+                password: "parent123",
+                studentName: "Jean DUPONT",
+                studentClass: "3eme"
+            },
+            {
+                id: 2,
+                name: "Awa KOUASSI",
+                email: "awa.kouassi@example.com",
+                phone: "+22890234567",
+                password: "parent456",
+                studentName: "Marie KOUASSI",
+                studentClass: "premiere-c"
+            }
+        ];
+
+        // Fonction pour vérifier les identifiants
+        function checkCredentials(username, password) {
+            return parentAccounts.find(account => 
+                (account.email === username || account.phone === username) && 
+                account.password === password
+            );
+        }
+
+        // Fonction pour afficher la section principale après connexion
+        function showMainContent(parentAccount) {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('register-section').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            
+            // Mettre à jour le titre
+            document.getElementById('main-title').textContent = `👥 Espace Parent - ${parentAccount.name}`;
+            document.getElementById('main-subtitle').textContent = `Suivi de ${parentAccount.studentName}`;
+            
+            // Afficher les données de l'élève
+            displayStudentInfo(parentAccount.studentName);
+        }
+
+        // Fonction pour afficher les informations de l'élève
+        function displayStudentInfo(studentName) {
+            const studentKey = studentName.toLowerCase();
+            const student = studentData[studentKey];
+            
+            if (!student) {
+                document.getElementById('student-info').style.display = 'none';
+                document.getElementById('evaluations-section').style.display = 'none';
+                document.getElementById('statistics').style.display = 'none';
+                document.getElementById('no-results').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('student-name-display').textContent = student.name;
+            document.getElementById('student-class-display').textContent = student.class;
+            document.getElementById('total-evaluations').textContent = student.evaluations.length;
+            
+            // Calculer la moyenne générale
+            if (student.evaluations.length > 0) {
+                const totalPoints = student.evaluations.reduce((sum, eval) => {
+                    return sum + (eval.grade / eval.maxGrade) * 20;
+                }, 0);
+                const average = (totalPoints / student.evaluations.length).toFixed(2);
+                document.getElementById('general-average').textContent = average + '/20';
+                
+                // Dernière évaluation
+                const latestEval = student.evaluations.reduce((latest, current) => {
+                    return new Date(current.date) > new Date(latest.date) ? current : latest;
+                });
+                document.getElementById('last-evaluation').textContent = formatDate(latestEval.date);
+            } else {
+                document.getElementById('general-average').textContent = '-';
+                document.getElementById('last-evaluation').textContent = '-';
+            }
+
+            document.getElementById('student-info').style.display = 'block';
+            displayEvaluations(student.evaluations);
+        }
+
+        // Fonction pour afficher les évaluations
+        function displayEvaluations(evaluations) {
+            const evaluationsList = document.getElementById('evaluations-list');
+            evaluationsList.innerHTML = '';
+
+            evaluations.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            evaluations.forEach(evaluation => {
+                const evaluationCard = createEvaluationCard(evaluation);
+                evaluationsList.appendChild(evaluationCard);
+            });
+
+            document.getElementById('evaluations-section').style.display = 'block';
+            updateStatistics(evaluations);
+        }
+
+        // Fonction pour créer une carte d'évaluation
+        function createEvaluationCard(evaluation) {
+            const card = document.createElement('div');
+            card.className = 'evaluation-card';
+            
+            const gradePercentage = (evaluation.grade / evaluation.maxGrade) * 100;
+            let gradeClass = 'grade-poor';
+            if (gradePercentage >= 85) gradeClass = 'grade-excellent';
+            else if (gradePercentage >= 70) gradeClass = 'grade-good';
+            else if (gradePercentage >= 50) gradeClass = 'grade-average';
+
+            card.innerHTML = `
+                <div class="evaluation-header">
+                    <div>
+                        <div class="evaluation-title">${evaluation.title}</div>
+                        <div class="evaluation-meta">
+                            📚 ${evaluation.subject} • 👨‍🏫 ${evaluation.teacher} • 📅 ${formatDate(evaluation.date)}
+                        </div>
+                    </div>
+                    <div class="grade-display">
+                        <div class="grade-value ${gradeClass}">${evaluation.grade}</div>
+                        <div class="grade-max">sur ${evaluation.maxGrade}</div>
+                    </div>
+                </div>
+                
+                <div class="evaluation-details">
+                    <div class="evaluation-info">
+                        <div class="info-label">Type d'évaluation</div>
+                        <div class="info-value">${evaluation.type}</div>
+                    </div>
+                    <div class="evaluation-info">
+                        <div class="info-label">Pourcentage</div>
+                        <div class="info-value">${gradePercentage.toFixed(1)}%</div>
+                    </div>
+                </div>
+                
+                ${evaluation.appreciation ? `
+                    <div class="appreciation">
+                        <div class="appreciation-label">💭 Appréciation</div>
+                        <div class="appreciation-value">${getAppreciationText(evaluation.appreciation)}</div>
+                    </div>
+                ` : ''}
+                
+                ${evaluation.comments ? `
+                    <div class="comments">
+                        <div class="comments-label">📝 Commentaires de l'enseignant</div>
+                        <div class="comments-text">${evaluation.comments}</div>
+                    </div>
+                ` : ''}
+            `;
+
+            return card;
+        }
+
+        // Fonction pour obtenir le texte d'appréciation
+        function getAppreciationText(appreciation) {
+            const appreciations = {
+                'excellent': '⭐ Excellent',
+                'tres-bien': '👍 Très bien',
+                'bien': '✅ Bien',
+                'assez-bien': '🙂 Assez bien',
+                'passable': '😐 Passable',
+                'insuffisant': '😕 Insuffisant',
+                'tres-insuffisant': '❌ Très insuffisant'
+            };
+            return appreciations[appreciation] || appreciation;
+        }
+
+        // Fonction pour mettre à jour les statistiques
+        function updateStatistics(evaluations) {
+            if (evaluations.length === 0) {
+                document.getElementById('statistics').style.display = 'none';
+                return;
+            }
+
+            const totalEvaluations = evaluations.length;
+            const subjects = [...new Set(evaluations.map(e => e.subject))];
+            
+            // Calculer la moyenne
+            const totalPoints = evaluations.reduce((sum, eval) => {
+                return sum + (eval.grade / eval.maxGrade) * 20;
+            }, 0);
+            const average = (totalPoints / evaluations.length).toFixed(2);
+            
+            // Trouver la meilleure note
+            const bestGrade = Math.max(...evaluations.map(e => (e.grade / e.maxGrade) * 20)).toFixed(2);
+
+            document.getElementById('stat-total').textContent = totalEvaluations;
+            document.getElementById('stat-average').textContent = average;
+            document.getElementById('stat-best').textContent = bestGrade;
+            document.getElementById('stat-subjects').textContent = subjects.length;
+            
+            document.getElementById('statistics').style.display = 'block';
+        }
+
+        // Fonction pour formater la date
+        function formatDate(dateString) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('fr-FR', options);
+        }
+
+        // Fonction pour masquer les résultats
+        function hideResults() {
+            document.getElementById('student-info').style.display = 'none';
+            document.getElementById('evaluations-section').style.display = 'none';
+            document.getElementById('statistics').style.display = 'none';
+        }
+
+        // Fonctions pour basculer entre les sections
+        function showLoginSection() {
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('register-section').classList.add('hidden');
+            document.getElementById('main-content').classList.add('hidden');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('register-section').classList.remove('hidden');
+            document.getElementById('main-content').classList.add('hidden');
+        }
+
+        function logout() {
+            showLoginSection();
+            document.getElementById('loginForm').reset();
+            hideResults();
+            document.getElementById('no-results').style.display = 'none';
+        }
+
+        // Gestion de la soumission du formulaire de connexion
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const parentAccount = checkCredentials(username, password);
+            
+            if (parentAccount) {
+                showMainContent(parentAccount);
+            } else {
+                const errorElement = document.getElementById('error-message');
+                errorElement.textContent = "Identifiant ou mot de passe incorrect";
+                errorElement.style.display = 'block';
+                
+                setTimeout(() => {
+                    errorElement.style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        // Gestion de la soumission du formulaire d'inscription
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('parent-name').value;
+            const email = document.getElementById('parent-email').value;
+            const phone = document.getElementById('parent-phone').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const studentName = document.getElementById('student-name').value;
+            const studentClass = document.getElementById('student-class').value;
+            
+            // Validation
+            const errorElement = document.getElementById('register-error');
+            const successElement = document.getElementById('register-success');
+            
+            errorElement.style.display = 'none';
+            successElement.style.display = 'none';
+            
+            if (password !== confirmPassword) {
+                errorElement.textContent = "Les mots de passe ne correspondent pas";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            if (!studentData[studentName.toLowerCase()]) {
+                errorElement.textContent = "Aucun élève trouvé avec ce nom. Contactez l'établissement.";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Vérifier si le compte existe déjà
+            if (parentAccounts.some(account => account.email === email)) {
+                errorElement.textContent = "Un compte existe déjà avec cet email";
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Créer le nouveau compte
+            const newAccount = {
+                id: parentAccounts.length + 1,
+                name,
+                email,
+                phone,
+                password,
+                studentName,
+                studentClass
+            };
+            
+            parentAccounts.push(newAccount);
+            
+            // Afficher un message de succès
+            successElement.textContent = "Compte créé avec succès! Vous pouvez maintenant vous connecter.";
+            successElement.style.display = 'block';
+            
+            // Réinitialiser le formulaire
+            this.reset();
+            
+            // Revenir à la page de connexion après 3 secondes
+            setTimeout(() => {
+                showLoginSection();
+                successElement.style.display = 'none';
+            }, 3000);
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            hideResults();
+        });
+    </script>
+</body>
+</html>
