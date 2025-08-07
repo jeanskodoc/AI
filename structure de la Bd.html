@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Gestion Scolaire - Lycée Niamtougou</title>
+    <style>
+        /* Styles globaux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        nav a {
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        nav a.active {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        /* Sections */
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #444;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+        
+        /* Tableaux */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #f8f9ff;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        tr:hover {
+            background: #f8f9ff;
+        }
+        
+        /* Formulaires */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Cartes */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        /* Alertes */
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            
+            nav a {
+                border-bottom: 1px solid #eee;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="school-logo">LN</div>
+            <h1>Lycée Niamtougou</h1>
+            <p>Système de Gestion Scolaire Intégré</p>
+        </header>
+        
+        <nav>
+            <a href="#" class="active" onclick="showSection('dashboard')"><i>📊</i> Tableau de Bord</a>
+            <a href="#" onclick="showSection('teachers')"><i>👨‍🏫</i> Enseignants</a>
+            <a href="#" onclick="showSection('students')"><i>👨‍🎓</i> Élèves</a>
+            <a href="#" onclick="showSection('parents')"><i>👪</i> Parents</a>
+            <a href="#" onclick="showSection('evaluations')"><i>📝</i> Évaluations</a>
+            <a href="#" onclick="showSection('reports')"><i>📈</i> Rapports</a>
+        </nav>
+        
+        <!-- Tableau de Bord -->
+        <div id="dashboard-section" class="section">
+            <h2 class="section-title"><i>📊</i> Tableau de Bord</h2>
+            
+            <div class="stats-grid">
+                <div class="card">
+                    <div class="card-title">Nombre d'Élèves</div>
+                    <div class="stat-value" id="total-students">0</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Nombre d'Enseignants</div>
+                    <div class="stat-value" id="total-teachers">0</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Moyenne Générale</div>
+                    <div class="stat-value" id="average-grade">-</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Élèves en Difficulté</div>
+                    <div class="stat-value" id="struggling-students">0</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">Dernières Évaluations</div>
+                <table id="recent-evaluations">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Matière</th>
+                            <th>Classe</th>
+                            <th>Enseignant</th>
+                            <th>Moyenne</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rempli dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Gestion des Enseignants -->
+        <div id="teachers-section" class="section" style="display: none;">
+            <h2 class="section-title"><i>👨‍🏫</i> Gestion des Enseignants</h2>
+            
+            <button onclick="showTeacherForm()">Ajouter un Enseignant</button>
+            
+            <table id="teachers-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Matières</th>
+                        <th>Classes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rempli dynamiquement -->
+                </tbody>
+            </table>
+            
+            <!-- Formulaire d'ajout/modification d'enseignant -->
+            <div id="teacher-form" style="display: none; margin-top: 30px;">
+                <h3 id="teacher-form-title">Ajouter un Enseignant</h3>
+                
+                <form id="teacher-data-form">
+                    <input type="hidden" id="teacher-id">
+                    
+                    <div class="form-group">
+                        <label for="teacher-firstname">Prénom</label>
+                        <input type="text" id="teacher-firstname" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-lastname">Nom</label>
+                        <input type="text" id="teacher-lastname" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-email">Email</label>
+                        <input type="email" id="teacher-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-phone">Téléphone</label>
+                        <input type="tel" id="teacher-phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-subjects">Matières enseignées</label>
+                        <select id="teacher-subjects" multiple>
+                            <!-- Rempli dynamiquement -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-classes">Classes enseignées</label>
+                        <select id="teacher-classes" multiple>
+                            <!-- Rempli dynamiquement -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-username">Nom d'utilisateur</label>
+                        <input type="text" id="teacher-username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacher-password">Mot de passe</label>
+                        <input type="password" id="teacher-password" required>
+                    </div>
+                    
+                    <button type="submit">Enregistrer</button>
+                    <button type="button" onclick="hideTeacherForm()">Annuler</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Gestion des Élèves -->
+        <div id="students-section" class="section" style="display: none;">
+            <h2 class="section-title"><i>👨‍🎓</i> Gestion des Élèves</h2>
+            
+            <div class="filters">
+                <select id="class-filter" onchange="filterStudents()">
+                    <option value="">Toutes les classes</option>
+                    <!-- Rempli dynamiquement -->
+                </select>
+            </div>
+            
+            <table id="students-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Classe</th>
+                        <th>Date de Naissance</th>
+                        <th>Moyenne</th>
+                        <th>Parents</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rempli dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Gestion des Parents -->
+        <div id="parents-section" class="section" style="display: none;">
+            <h2 class="section-title"><i>👪</i> Gestion des Parents</h2>
+            
+            <table id="parents-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Élèves</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rempli dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Gestion des Évaluations -->
+        <div id="evaluations-section" class="section" style="display: none;">
+            <h2 class="section-title"><i>📝</i> Gestion des Évaluations</h2>
+            
+            <div class="filters">
+                <select id="eval-class-filter" onchange="filterEvaluations()">
+                    <option value="">Toutes les classes</option>
+                    <!-- Rempli dynamiquement -->
+                </select>
+                
+                <select id="eval-subject-filter" onchange="filterEvaluations()">
+                    <option value="">Toutes les matières</option>
+                    <!-- Rempli dynamiquement -->
+                </select>
+            </div>
+            
+            <table id="evaluations-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Matière</th>
+                        <th>Classe</th>
+                        <th>Titre</th>
+                        <th>Type</th>
+                        <th>Note Max</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rempli dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Rapports et Statistiques -->
+        <div id="reports-section" class="section" style="display: none;">
+            <h2 class="section-title"><i>📈</i> Rapports et Statistiques</h2>
+            
+            <div class="report-options">
+                <button onclick="generateClassReport()">Rapport par Classe</button>
+                <button onclick="generateSubjectReport()">Rapport par Matière</button>
+                <button onclick="generateStudentReport()">Rapport par Élève</button>
+            </div>
+            
+            <div id="report-container" style="margin-top: 30px;">
+                <!-- Les rapports seront affichés ici -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de données
+        const SchoolDB = {
+            school: {
+                name: "Lycée Niamtougou",
+                location: "Niamtougou, Togo",
+                cycles: [
+                    {
+                        id: "college",
+                        name: "Collège",
+                        levels: ["6ème", "5ème", "4ème", "3ème"]
+                    },
+                    {
+                        id: "lycee",
+                        name: "Lycée",
+                        levels: ["Seconde A", "Seconde C", "Première A1", "Première A2", "Première C", "Première D", "Terminale A1", "Terminale A2", "Terminale C", "Terminale D"]
+                    }
+                ],
+                subjects: [
+                    { id: "francais", name: "Français" },
+                    { id: "mathematiques", name: "Mathématiques" },
+                    { id: "sciences-physiques", name: "Sciences Physiques" },
+                    { id: "svt", name: "SVT" },
+                    { id: "histoire-geographie", name: "Histoire-Géographie" },
+                    { id: "anglais", name: "Anglais" },
+                    { id: "allemand", name: "Allemand" },
+                    { id: "espagnol", name: "Espagnol" },
+                    { id: "philosophie", name: "Philosophie" },
+                    { id: "eps", name: "EPS" },
+                    { id: "informatique", name: "Informatique" },
+                    { id: "ewe", name: "Éwé" },
+                    { id: "kabye", name: "Kabyè" }
+                ]
+            },
+            
+            teachers: [
+                {
+                    id: 1,
+                    firstName: "Jean",
+                    lastName: "KOFFI",
+                    email: "jean.koffi@lycee-niamtougou.tg",
+                    phone: "+22890123456",
+                    subjects: ["mathematiques"],
+                    classes: ["6ème", "5ème"],
+                    username: "math_6eme",
+                    password: "math123",
+                    isAdmin: false
+                }
+            ],
+            
+            students: [
+                {
+                    id: 1,
+                    firstName: "Jean-Baptiste",
+                    lastName: "AKOUETE",
+                    birthDate: "2007-05-15",
+                    gender: "M",
+                    class: "Terminale A1",
+                    cycle: "lycee",
+                    parents: [1],
+                    evaluations: [1]
+                }
+            ],
+            
+            parents: [
+                {
+                    id: 1,
+                    firstName: "Komlan",
+                    lastName: "AKOUETE",
+                    email: "komlan.akouete@example.com",
+                    phone: "+22891123456",
+                    password: "parent123",
+                    students: [1],
+                    username: "komlan.akouete"
+                }
+            ],
+            
+            evaluations: [
+                {
+                    id: 1,
+                    studentId: 1,
+                    teacherId: 1,
+                    subject: "mathematiques",
+                    class: "Terminale A1",
+                    title: "Contrôle sur les fonctions",
+                    type: "Contrôle écrit",
+                    date: "2024-11-10",
+                    maxGrade: 20,
+                    grade: 8.5,
+                    appreciation: "Moyen - Doit faire plus d'efforts"
+                }
+            ],
+            
+            // Méthodes utilitaires
+            getStudentById: function(id) {
+                return this.students.find(student => student.id === id);
+            },
+            
+            getStudentsByClass: function(className) {
+                return this.students.filter(student => student.class === className);
+            },
+            
+            getTeacherById: function(id) {
+                return this.teachers.find(teacher => teacher.id === id);
+            },
+            
+            getEvaluationsByStudent: function(studentId) {
+                return this.evaluations.filter(eval => eval.studentId === studentId);
+            },
+            
+            getEvaluationsByClass: function(className) {
+                return this.evaluations.filter(eval => eval.class === className);
+            },
+            
+            getParentByStudent: function(studentId) {
+                return this.parents.find(parent => parent.students.includes(studentId));
+            },
+            
+            getSubjectName: function(subjectId) {
+                const subject = this.school.subjects.find(sub => sub.id === subjectId);
+                return subject ? subject.name : subjectId;
+            },
+            
+            getClassName: function(classId) {
+                const classMap = {
+                    "6eme": "6ème",
+                    "5eme": "5ème",
+                    "4eme": "4ème",
+                    "3eme": "3ème",
+                    "seconde-a": "Seconde A",
+                    "seconde-c": "Seconde C",
+                    "premiere-a1": "Première A1",
+                    "premiere-a2": "Première A2",
+                    "premiere-c": "Première C",
+                    "premiere-d": "Première D",
+                    "terminale-a1": "Terminale A1",
+                    "terminale-a2": "Terminale A2",
+                    "terminale-c": "Terminale C",
+                    "terminale-d": "Terminale D"
+                };
+                return classMap[classId] || classId;
+            }
+        };
+
+        // Fonctions d'affichage
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Afficher la section demandée
+            document.getElementById(sectionId + '-section').style.display = 'block';
+            
+            // Mettre à jour la navigation
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Charger les données si nécessaire
+            switch(sectionId) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'teachers':
+                    loadTeachers();
+                    break;
+                case 'students':
+                    loadStudents();
+                    break;
+                case 'parents':
+                    loadParents();
+                    break;
+                case 'evaluations':
+                    loadEvaluations();
+                    break;
+            }
+        }
+        
+        function loadDashboard() {
+            // Statistiques générales
+            document.getElementById('total-students').textContent = SchoolDB.students.length;
+            document.getElementById('total-teachers').textContent = SchoolDB.teachers.length;
+            
+            // Calcul de la moyenne générale
+            const averages = SchoolDB.students.map(student => {
+                const evals = SchoolDB.getEvaluationsByStudent(student.id);
+                if (evals.length > 0) {
+                    return evals.reduce((sum, eval) => sum + (eval.grade / eval.maxGrade) * 20, 0) / evals.length;
+                }
+                return 0;
+            }).filter(avg => avg > 0);
+            
+            const globalAverage = averages.length > 0 ? 
+                (averages.reduce((a, b) => a + b, 0) / averages.length).toFixed(2) : '-';
+            document.getElementById('average-grade').textContent = globalAverage;
+            
+            // Élèves en difficulté (moyenne < 10/20)
+            const struggling = SchoolDB.students.filter(student => {
+                const evals = SchoolDB.getEvaluationsByStudent(student.id);
+                if (evals.length > 0) {
+                    const avg = evals.reduce((sum, eval) => sum + (eval.grade / eval.maxGrade) * 20, 0) / evals.length;
+                    return avg < 10;
+                }
+                return false;
+            }).length;
+            document.getElementById('struggling-students').textContent = struggling;
+            
+            // Dernières évaluations
+            const recentEvals = SchoolDB.evaluations.slice(-5).reverse();
+            const evalTable = document.getElementById('recent-evaluations').querySelector('tbody');
+            evalTable.innerHTML = '';
+            
+            recentEvals.forEach(eval => {
+                const teacher = SchoolDB.getTeacherById(eval.teacherId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${eval.date}</td>
+                    <td>${SchoolDB.getSubjectName(eval.subject)}</td>
+                    <td>${eval.class}</td>
+                    <td>${teacher ? teacher.firstName + ' ' + teacher.lastName : '-'}</td>
+                    <td>${eval.grade}/${eval.maxGrade}</td>
+                `;
+                evalTable.appendChild(row);
+            });
+        }
+        
+        function loadTeachers() {
+            const table = document.getElementById('teachers-table').querySelector('tbody');
+            table.innerHTML = '';
+            
+            SchoolDB.teachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${teacher.firstName} ${teacher.lastName}</td>
+                    <td>${teacher.email}</td>
+                    <td>${teacher.phone}</td>
+                    <td>${teacher.subjects.map(sub => SchoolDB.getSubjectName(sub)).join(', ')}</td>
+                    <td>${teacher.classes.join(', ')}</td>
+                    <td>
+                        <button onclick="editTeacher(${teacher.id})">Modifier</button>
+                        <button onclick="deleteTeacher(${teacher.id})">Supprimer</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+            
+            // Remplir les options des matières et classes pour le formulaire
+            const subjectSelect = document.getElementById('teacher-subjects');
+            subjectSelect.innerHTML = '';
+            SchoolDB.school.subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = subject.name;
+                subjectSelect.appendChild(option);
+            });
+            
+            const classSelect = document.getElementById('teacher-classes');
+            classSelect.innerHTML = '';
+            SchoolDB.school.cycles.forEach(cycle => {
+                cycle.levels.forEach(level => {
+                    const option = document.createElement('option');
+                    option.value = level;
+                    option.textContent = level;
+                    classSelect.appendChild(option);
+                });
+            });
+        }
+        
+        function loadStudents() {
+            // Remplir le filtre des classes
+            const classFilter = document.getElementById('class-filter');
+            classFilter.innerHTML = '<option value="">Toutes les classes</option>';
+            
+            SchoolDB.school.cycles.forEach(cycle => {
+                cycle.levels.forEach(level => {
+                    const option = document.createElement('option');
+                    option.value = level;
+                    option.textContent = level;
+                    classFilter.appendChild(option);
+                });
+            });
+            
+            // Charger tous les élèves
+            filterStudents();
+        }
+        
+        function filterStudents() {
+            const classFilter = document.getElementById('class-filter').value;
+            const table = document.getElementById('students-table').querySelector('tbody');
+            table.innerHTML = '';
+            
+            const filteredStudents = classFilter ? 
+                SchoolDB.getStudentsByClass(classFilter) : SchoolDB.students;
+            
+            filteredStudents.forEach(student => {
+                const parent = SchoolDB.getParentByStudent(student.id);
+                const evals = SchoolDB.getEvaluationsByStudent(student.id);
+                const avg = evals.length > 0 ? 
+                    (evals.reduce((sum, eval) => sum + (eval.grade / eval.maxGrade) * 20, 0) / evals.length).toFixed(2) : '-';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.lastName} ${student.firstName}</td>
+                    <td>${student.class}</td>
+                    <td>${student.birthDate}</td>
+                    <td>${avg}/20</td>
+                    <td>${parent ? parent.firstName + ' ' + parent.lastName : '-'}</td>
+                    <td>
+                        <button onclick="viewStudent(${student.id})">Voir</button>
+                        <button onclick="editStudent(${student.id})">Modifier</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+        
+        function loadParents() {
+            const table = document.getElementById('parents-table').querySelector('tbody');
+            table.innerHTML = '';
+            
+            SchoolDB.parents.forEach(parent => {
+                const students = parent.students.map(id => {
+                    const student = SchoolDB.getStudentById(id);
+                    return student ? student.firstName + ' ' + student.lastName : '';
+                }).filter(name => name);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${parent.lastName} ${parent.firstName}</td>
+                    <td>${parent.email}</td>
+                    <td>${parent.phone}</td>
+                    <td>${students.join(', ')}</td>
+                    <td>
+                        <button onclick="editParent(${parent.id})">Modifier</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+        
+        function loadEvaluations() {
+            // Remplir les filtres
+            const classFilter = document.getElementById('eval-class-filter');
+            classFilter.innerHTML = '<option value="">Toutes les classes</option>';
+            
+            SchoolDB.school.cycles.forEach(cycle => {
+                cycle.levels.forEach(level => {
+                    const option = document.createElement('option');
+                    option.value = level;
+                    option.textContent = level;
+                    classFilter.appendChild(option);
+                });
+            });
+            
+            const subjectFilter = document.getElementById('eval-subject-filter');
+            subjectFilter.innerHTML = '<option value="">Toutes les matières</option>';
+            
+            SchoolDB.school.subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = subject.name;
+                subjectFilter.appendChild(option);
+            });
+            
+            // Charger toutes les évaluations
+            filterEvaluations();
+        }
+        
+        function filterEvaluations() {
+            const classFilter = document.getElementById('eval-class-filter').value;
+            const subjectFilter = document.getElementById('eval-subject-filter').value;
+            
+            const table = document.getElementById('evaluations-table').querySelector('tbody');
+            table.innerHTML = '';
+            
+            const filteredEvals = SchoolDB.evaluations.filter(eval => {
+                return (!classFilter || eval.class === classFilter) && 
+                       (!subjectFilter || eval.subject === subjectFilter);
+            });
+            
+            filteredEvals.forEach(eval => {
+                const teacher = SchoolDB.getTeacherById(eval.teacherId);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${eval.date}</td>
+                    <td>${SchoolDB.getSubjectName(eval.subject)}</td>
+                    <td>${eval.class}</td>
+                    <td>${eval.title}</td>
+                    <td>${eval.type}</td>
+                    <td>${eval.maxGrade}</td>
+                    <td>
+                        <button onclick="viewEvaluation(${eval.id})">Voir</button>
+                        <button onclick="editEvaluation(${eval.id})">Modifier</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+        
+        // Fonctions pour les enseignants
+        function showTeacherForm() {
+            document.getElementById('teacher-form').style.display = 'block';
+            document.getElementById('teacher-form-title').textContent = 'Ajouter un Enseignant';
+            document.getElementById('teacher-data-form').reset();
+            document.getElementById('teacher-id').value = '';
+        }
+        
+        function hideTeacherForm() {
+            document.getElementById('teacher-form').style.display = 'none';
+        }
+        
+        function editTeacher(id) {
+            const teacher = SchoolDB.getTeacherById(id);
+            if (!teacher) return;
+            
+            document.getElementById('teacher-form').style.display = 'block';
+            document.getElementById('teacher-form-title').textContent = 'Modifier un Enseignant';
+            
+            document.getElementById('teacher-id').value = teacher.id;
+            document.getElementById('teacher-firstname').value = teacher.firstName;
+            document.getElementById('teacher-lastname').value = teacher.lastName;
+            document.getElementById('teacher-email').value = teacher.email;
+            document.getElementById('teacher-phone').value = teacher.phone;
+            document.getElementById('teacher-username').value = teacher.username;
+            document.getElementById('teacher-password').value = teacher.password;
+            
+            // Sélectionner les matières
+            const subjectSelect = document.getElementById('teacher-subjects');
+            Array.from(subjectSelect.options).forEach(option => {
+                option.selected = teacher.subjects.includes(option.value);
+            });
+            
+            // Sélectionner les classes
+            const classSelect = document.getElementById('teacher-classes');
+            Array.from(classSelect.options).forEach(option => {
+                option.selected = teacher.classes.includes(option.value);
+            });
+        }
+        
+        function deleteTeacher(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet enseignant ?')) {
+                SchoolDB.teachers = SchoolDB.teachers.filter(teacher => teacher.id !== id);
+                loadTeachers();
+                alert('Enseignant supprimé avec succès');
+            }
+        }
+        
+        // Gestion du formulaire enseignant
+        document.getElementById('teacher-data-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('teacher-id').value;
+            const isNew = !id;
+            
+            const teacherData = {
+                firstName: document.getElementById('teacher-firstname').value,
+                lastName: document.getElementById('teacher-lastname').value,
+                email: document.getElementById('teacher-email').value,
+                phone: document.getElementById('teacher-phone').value,
+                username: document.getElementById('teacher-username').value,
+                password: document.getElementById('teacher-password').value,
+                subjects: Array.from(document.getElementById('teacher-subjects').selectedOptions)
+                    .map(option => option.value),
+                classes: Array.from(document.getElementById('teacher-classes').selectedOptions)
+                    .map(option => option.value),
+                isAdmin: false
+            };
+            
+            if (isNew) {
+                // Ajouter un nouvel enseignant
+                teacherData.id = SchoolDB.teachers.length > 0 ? 
+                    Math.max(...SchoolDB.teachers.map(t => t.id)) + 1 : 1;
+                SchoolDB.teachers.push(teacherData);
+                alert('Enseignant ajouté avec succès');
+            } else {
+                // Mettre à jour un enseignant existant
+                const index = SchoolDB.teachers.findIndex(t => t.id === parseInt(id));
+                if (index !== -1) {
+                    teacherData.id = parseInt(id);
+                    SchoolDB.teachers[index] = teacherData;
+                    alert('Enseignant mis à jour avec succès');
+                }
+            }
+            
+            hideTeacherForm();
+            loadTeachers();
+        });
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+        });
+    </script>
+</body>
+</html>
